@@ -29,6 +29,16 @@ describe 'app' do
       end
     end
 
+    # TODO: get this working
+    # context 'when a search term is provided' do
+    #   it 'filters tasks by name' do
+    #     get '/api/tasks?user_id=1&search=horse'
+    #
+    #     expect(JSON.parse(last_response.body).first['description'])
+    #                .to eq 'buy a horse-dagger'
+    #   end
+    # end
+
     context 'when an invalid id is entered' do
       it 'returns a 404' do
         get '/api/tasks/9999'
@@ -47,10 +57,10 @@ describe 'app' do
     end
   end
 
-  describe 'put /api/task/:id' do
+  describe 'put /api/tasks/:id' do
     context 'when given a valid task-user id' do
       it 'updates completed column to true' do
-        put '/api/task/5'
+        put '/api/tasks/5'
         task = TaskUser.get(5)
 
         expect(last_response.status).to eq 201
@@ -60,16 +70,16 @@ describe 'app' do
 
     context 'when given an invalid task_user id' do
       it 'sends a 404 error message' do
-        put '/api/task/100'
+        put '/api/tasks/100'
 
         expect(last_response.status).to eq 404
       end
     end
   end
 
-  describe 'post /api/task' do
+  describe 'post /api/tasks' do
     it 'creates a new task and adds a user to it' do
-      post '/api/task?description=buy a horse-dagger' \
+      post '/api/tasks?description=buy a horse-dagger' \
            '&user_id=1&do_by=2/2/2017&priority=11'
 
       expect(JSON.parse(last_response.body)['task']['description'])
@@ -80,10 +90,10 @@ describe 'app' do
     end
   end
 
-  describe 'post /api/user/:name' do
+  describe 'post /api/users/:name' do
     context 'when a user name is entered' do
       it 'creates a new user when given a name' do
-        post '/api/user/tom'
+        post '/api/users/tom'
 
         expect(JSON.parse(last_response.body)['name']).to eq 'tom'
       end
@@ -91,7 +101,7 @@ describe 'app' do
 
     context 'when nothing is entered' do
       it 'sends a 400 error message' do
-        post '/api/user/'
+        post '/api/users/'
 
         expect(JSON.parse(last_response.body)).to eq 'Error: No name entered'
         expect(last_response.status).to eq 400
