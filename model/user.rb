@@ -15,10 +15,10 @@ class User
 end
 
 def main
-DataMapper.setup(:default, 'postgres://adamreed:@localhost/tasks')
+  DataMapper.setup(:default, 'postgres://adamreed:@localhost/tasks')
 
-DataMapper.finalize
-DataMapper.auto_migrate!
+  DataMapper.finalize
+  DataMapper.auto_migrate!
 end
 
 main if __FILE__ == $PROGRAM_NAME
