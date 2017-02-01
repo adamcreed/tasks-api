@@ -29,15 +29,14 @@ describe 'app' do
       end
     end
 
-    # TODO: get this working
-    # context 'when a search term is provided' do
-    #   it 'filters tasks by name' do
-    #     get '/api/tasks?user_id=1&search=horse'
-    #
-    #     expect(JSON.parse(last_response.body).first['description'])
-    #                .to eq 'buy a horse-dagger'
-    #   end
-    # end
+    context 'when a search term is provided' do
+      it 'filters tasks by name' do
+        get '/api/tasks?user_id=1&search=buy a horse-dagger'
+
+        expect(JSON.parse(last_response.body).first['description'])
+                   .to eq 'buy a horse-dagger'
+      end
+    end
 
     context 'when an invalid id is entered' do
       it 'returns a 404' do
@@ -70,7 +69,7 @@ describe 'app' do
 
     context 'when given an invalid task_user id' do
       it 'sends a 404 error message' do
-        put '/api/tasks/100'
+        put '/api/tasks/9999'
 
         expect(last_response.status).to eq 404
       end

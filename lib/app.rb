@@ -6,12 +6,14 @@ require_relative 'task_functions'
 
 DataMapper.setup(:default, 'postgres://adamreed:@localhost/tasks')
 
-get 'api/tasks' do
+get '/api/tasks' do
   if params['search'].nil? or params['user_id'].nil?
     pass
   else
-    # TODO: figure out how 'like' in data mapper works
-    User.get(params['user_id']).task_users.all(task.description = "%#{params['search']}%")
+    completion_filter = params['completed'] || false
+    get_tasks(User.get(params['user_id']).task_users.task
+                  .all(:description.like => params['search']),
+                  completion_filter).to_json
   end
 end
 

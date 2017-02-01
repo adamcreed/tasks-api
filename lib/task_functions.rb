@@ -1,11 +1,11 @@
 # Using a more procedural approach rather than an OO one
 # makes more sense to me here, given the fleeting nature of each function.
 
-def get_tasks(user, completion_filter)
-  user.task_users(:order => [:priority]).all(:completed => completion_filter)
+def get_tasks(search, completion_filter)
+  search.task_users(:order => [:priority]).all(:completed => completion_filter)
       .map do |task_user|
     {
-      user_name: user.name,
+      user_name: task_user.user.name,
       description: task_user.task.description,
       priority: task_user.priority,
       completed: task_user.completed,
