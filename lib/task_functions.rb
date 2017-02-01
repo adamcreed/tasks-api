@@ -3,7 +3,7 @@
 
 def get_tasks(search, completion_filter)
   search.task_users(:order => [:priority]).all(:completed => completion_filter)
-      .map do |task_user|
+        .map do |task_user|
     {
       user_name: task_user.user.name,
       description: task_user.task.description,

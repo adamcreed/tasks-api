@@ -34,7 +34,7 @@ describe 'app' do
         get '/api/tasks?user_id=1&search=buy a horse-dagger'
 
         expect(JSON.parse(last_response.body).first['description'])
-                   .to eq 'buy a horse-dagger'
+          .to eq 'buy a horse-dagger'
       end
     end
 
