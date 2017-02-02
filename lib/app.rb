@@ -11,7 +11,7 @@ get '/api/tasks' do
     pass
   else
     completion_filter = params['completed'] || false
-    get_tasks(User.get(params['user_id']).task_users.task
+    get_tasks(User.get(params['user_id']).tasks
               .all(:description.like => params['search']),
               completion_filter).to_json
   end
